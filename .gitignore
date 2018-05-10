@@ -45,7 +45,9 @@ Thumbs.db
 
 
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/*
+mvnw
+mvnw/*
 
 ### STS ###
 .apt_generated
@@ -60,6 +62,8 @@ target/
 *.iws
 *.iml
 *.ipr
+.vscode
+.vscode/*
 
 ### NetBeans ###
 nbproject/private/
