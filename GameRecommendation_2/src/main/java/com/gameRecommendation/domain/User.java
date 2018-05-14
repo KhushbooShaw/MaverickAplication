@@ -2,6 +2,7 @@ package com.gameRecommendation.domain;
 
 import java.util.Arrays;
 
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity(label = "User")
@@ -9,7 +10,7 @@ public class User {
 
 	// @Id
 	// @GeneratedValue
-	// @GraphId
+    @GraphId
 	private Long id;
 	private String name;
 	private String gender;

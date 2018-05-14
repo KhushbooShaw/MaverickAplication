@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gameRecommendation.domain.Category;
 import com.gameRecommendation.domain.Topics;
 import com.gameRecommendation.domain.User;
+import com.gameRecommendation.service.KafkaProducer;
 import com.gameRecommendation.service.RecommendationService;
 
 import io.swagger.annotations.Api;
@@ -36,8 +37,8 @@ public class RecommendationController {
 
 	private RecommendationService recommendationService;
 
-	// @Autowired
-	// KafkaProducer producer;
+	 @Autowired
+	 KafkaProducer producer;
 
 	Logger log = LoggerFactory.getLogger(RecommendationController.class);
 
@@ -84,7 +85,7 @@ public class RecommendationController {
 
 			User user1 = recommendationService.getUserById(Long.parseLong(id));
 
-			// producer.sendUser(user1);
+			 producer.sendUser(user1);
 
 			return new ResponseEntity<User>(user1, HttpStatus.OK);
 		} else {
@@ -93,27 +94,45 @@ public class RecommendationController {
 
 	}
 
-	@PostMapping("/recommendation/user")
-	public ResponseEntity<User> addUser(@RequestBody User user) throws Exception {
+//	@RequestMapping("/recommendation/user")
+//	public ResponseEntity<User> addUser() throws Exception {
+//
+//		System.out.println("inside add user");
+//		log.info("user save in controller1");
+//
+//		User user = new User();
+//		user.
+//
+//		log.info("user save in controller2");
+//
+//		return new ResponseEntity<User>(user1, HttpStatus.OK);
+//
+//		// }
+//
+//	}
 
-		// if(recommendationService.checkUserId(user.getId()))
-		// {
-		// throw new Exception("user with id "+user.getId()+" already exist");
-		// }
-		// else
-		// {
-		System.out.println("user details" + user);
-		log.info("user save in controller1");
-
-		User user1 = recommendationService.saveOrUpdateUser(user);
-
-		log.info("user save in controller2");
-
-		return new ResponseEntity<User>(user1, HttpStatus.OK);
-
-		// }
-
-	}
+	// @PostMapping("/recommendation/user")
+	// public ResponseEntity<User> addUser(@RequestBody User user) throws Exception
+	// {
+	//
+	// // if(recommendationService.checkUserId(user.getId()))
+	// // {
+	// // throw new Exception("user with id "+user.getId()+" already exist");
+	// // }
+	// // else
+	// // {
+	// System.out.println("user details" + user);
+	// log.info("user save in controller1");
+	//
+	// User user1 = recommendationService.saveOrUpdateUser(user);
+	//
+	// log.info("user save in controller2");
+	//
+	// return new ResponseEntity<User>(user1, HttpStatus.OK);
+	//
+	// // }
+	//
+	// }
 
 	@PutMapping("/recommendation/user/{id}")
 	public ResponseEntity<User> updateUserUsingId(@RequestBody User user, @PathVariable("id") String id)
@@ -155,11 +174,16 @@ public class RecommendationController {
 
 			log.info(id);
 
+			List<Category> topic = recommendationService.listAllCategory();
+
 			List<Category> topics = recommendationService.userFavCategory(Long.parseLong(id));
 
 			if (topics.size() != 0)
 
 			{
+				topic.removeAll(topics);
+
+				topics.addAll(topic);
 
 				return new ResponseEntity<>(topics, HttpStatus.OK);
 
@@ -276,7 +300,8 @@ public class RecommendationController {
 	}
 
 	@GetMapping("/recommendation/categoryTopics/{id}")
-	public ResponseEntity<List<Topics>> findTopicsInCategory(Category category, @PathVariable("id") String id) throws Exception {
+	public ResponseEntity<List<Topics>> findTopicsInCategory(Category category, @PathVariable("id") String id)
+			throws Exception {
 
 		if (recommendationService.checkCategoryId(Long.parseLong(id))) {
 

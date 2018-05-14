@@ -39,4 +39,6 @@ public interface RecommendationService {
 	List<Topics> topicsInCategory(Long id);
 
 	List<Category> userFavCategory(Long id);
+	
+	
 }
