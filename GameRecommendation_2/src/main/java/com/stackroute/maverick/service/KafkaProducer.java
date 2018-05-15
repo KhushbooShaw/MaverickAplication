@@ -32,12 +32,12 @@ public class KafkaProducer {
 	public void sendGame(Topics game) {
 
 		log.info("sending data='{}'", game);
-		kafkaTemplate.send("recommendation-game", game);
+		kafkaTemplate.send("recommendation-game.t", game);
 	}
 	public void sendRecommended(String[] game) {
 
 		log.info("sending data='{}'", game.length);
-		kafkaTemplate.send("recommendation-game-by-user-friends", game);
+		kafkaTemplate.send("recommendation-game-by-user-friends.t", game);
 	}
 	
 }

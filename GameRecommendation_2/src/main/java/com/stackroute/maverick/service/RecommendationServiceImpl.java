@@ -49,7 +49,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 	public LocalUser saveOrUpdateUser(LocalUser user) {
 		log.info("user save in service1");
 		System.out.println("RecommendationServiceImpl: user details " + user);
-		return userRepository.save(user);
+		return userRepository.save(user,1);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ import com.stackroute.maverick.service.KafkaConsumer;
 @Configuration
 public class KafkaConsumerConfig {
 
-	@Value("${jsa.kafka.bootstrap-servers}")
+	@Value("${kafka.bootstrap-servers}")
 	private String bootstrapServer;
 
 

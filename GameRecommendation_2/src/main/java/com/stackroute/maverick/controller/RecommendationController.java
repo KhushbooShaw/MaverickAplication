@@ -113,28 +113,28 @@ public class RecommendationController {
 //
 //	}
 
-	// @PostMapping("/recommendation/user")
-	// public ResponseEntity<User> addUser(@RequestBody User user) throws Exception
+	 @PostMapping("/recommendation/user")
+	 public ResponseEntity<LocalUser> addUser(@RequestBody LocalUser user) throws Exception
+	 {
+	
+	 //if(recommendationService.checkUserId(user.getId()))
 	// {
-	//
-	// // if(recommendationService.checkUserId(user.getId()))
-	// // {
-	// // throw new Exception("user with id "+user.getId()+" already exist");
-	// // }
+    // throw new Exception("user with id "+user.getId()+" already exist");
+	 // }
 	// // else
 	// // {
-	// System.out.println("user details" + user);
-	// log.info("user save in controller1");
-	//
-	// User user1 = recommendationService.saveOrUpdateUser(user);
-	//
-	// log.info("user save in controller2");
-	//
-	// return new ResponseEntity<User>(user1, HttpStatus.OK);
+	 System.out.println("user details" + user);
+	 log.info("user save in controller1");
+	
+	 LocalUser user1 = recommendationService.saveOrUpdateUser(user);
+	
+	 log.info("user save in controller2");
+	
+	 return new ResponseEntity<LocalUser>(user1, HttpStatus.OK);
 	//
 	// // }
 	//
-	// }
+	 }
 
 	@PutMapping("/recommendation/user/{id}")
 	public ResponseEntity<LocalUser> updateUserUsingId(@RequestBody LocalUser user, @PathVariable("id") String id)
@@ -325,7 +325,7 @@ public class RecommendationController {
 				return new ResponseEntity<>(topics, HttpStatus.OK);
 
 			} else {
-				throw new Exception("category with id " + id + " does not have any topics");
+				return new ResponseEntity<>(topics1, HttpStatus.OK);
 			}
 		} else {
 			throw new Exception("category with id " + id + " does not exist");
