@@ -15,9 +15,18 @@ public class Topics {
 		private String game_type;
 		private int no_of_player;
 		private int no_of_question;
-	  
+	    private int game_id;
 	    
-	    public Long getId() {
+	    
+	    public int getGame_id() {
+			return game_id;
+		}
+
+		public void setGame_id(int game_id) {
+			this.game_id = game_id;
+		}
+
+		public Long getId() {
 	        return id;
 	    }
 

@@ -39,6 +39,11 @@ public class KafkaProducer {
 		log.info("sending data='{}'", game.length);
 		kafkaTemplate.send("recommendation-game-by-user-friends.t", game);
 	}
+	public void sendGameid(String gameId) {
+
+		log.info("sending data='{}'", gameId);
+		kafkaTemplate.send("recommendation-gameId.t", gameId);
+	}
 	
 }
 

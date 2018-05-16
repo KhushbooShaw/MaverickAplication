@@ -1,4 +1,4 @@
-package com.stackroute.maverick.config;
+//package com.stackroute.maverick.config;
 //package com.gameRecommendation.config;
 //
 //import org.springframework.context.annotation.Bean;
