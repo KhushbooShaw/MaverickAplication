@@ -23,6 +23,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.M9</spring-cloud.version>
+		
 	</properties>
 
 	<dependencies>
@@ -68,7 +70,14 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
 		</dependency>
-
+        
+        <!-- centralized config  -->
+        
+		<dependency>
+           <groupId>org.springframework.cloud</groupId>
+           <artifactId>spring-cloud-starter-config</artifactId>
+       </dependency>
+       
 		<dependency><!-- If you're using the HTTP driver -->
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-ogm-http-driver</artifactId>
@@ -83,9 +92,30 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 		</dependency>
+		<!--eureka  -->
+		<dependency>
 
+			<groupId>org.springframework.cloud</groupId>
+
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+
+		</dependency>
 	</dependencies>
 
+<dependencyManagement>
+       <dependencies>
+           <dependency>
+               <groupId>org.springframework.cloud</groupId>
+               <artifactId>spring-cloud-dependencies</artifactId>
+               <version>${spring-cloud.version}</version>
+               <type>pom</type>
+               <scope>import</scope>
+           </dependency>
+       </dependencies>
+   </dependencyManagement>
+
+      
+       
 	<build>
 		<plugins>
 			<plugin>
@@ -101,6 +131,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
 
 	</build>
 
@@ -144,3 +175,4 @@
 	</pluginRepositories>
 
 </project>
+
