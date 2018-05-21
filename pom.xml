@@ -27,5 +27,6 @@
 	<modules>
 		<module>Server</module>
                 <module>GameRecommendation</module>
+                <module>AdaptiveAnalyzer</module>
 	</modules>
 </project>

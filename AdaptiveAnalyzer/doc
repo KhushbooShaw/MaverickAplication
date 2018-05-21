@@ -1,0 +1,331 @@
+﻿GAME RECOMMENDATION SERVICE
+
+API:http://localhost:8080/api/v1/recommendation/users
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/users
+Request Method: GET
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+NA
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+[
+{
+"id":81,
+"name":"shyam"
+},
+{
+"id":20,
+"name":"sita"
+},
+{
+"id":82,
+"name":"aditya"
+},
+{
+"id":83,
+"name":"rohan"
+},
+{
+"id":84,
+"name":"vina"
+},
+{
+"id":85,
+"name":"ajay"
+}]
+
+API:http://localhost:8080/api/v1/recommendation/user/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/user/{id}
+Request Method: GET
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+{
+"id":83,
+"name":"rohan"
+} 
+
+Exception body:
+
+{
+"code":500,
+"description":"user with id 89 does not exist"
+}
+
+API:http://localhost:8080/api/v1/recommendation/user/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/user/{id}
+Request Method: PUT
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+{
+"id":83,
+"name":"rohan"
+} 
+
+Response :
+
+Response body:
+
+{
+"id":83,
+"name":"rohan"
+} 
+
+Exception body:
+
+{
+"code":500,
+"description":"user with id 89 does not exist"
+}
+
+API:http://localhost:8080/api/v1/recommendation/user/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/user/{id}
+Request Method: DELETE
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+{
+"id":83,
+"name":"rohan"
+} 
+
+Exception body:
+
+{
+"code":500,
+"description":"user with id 89 does not exist"
+}
+
+API:http://localhost:8080/api/v1/recommendation/games
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/games
+Request Method: GET
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+NA
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+[
+{
+"id":21,
+"name":"g.k"
+},
+{"id":86,
+"name":"ipl"
+},
+{"id":105,
+"name":"harry potter"
+},
+{"id":125,
+"name":"politics"
+},
+{"id":145,
+"name":"bollywood"
+}
+]
+
+
+API:http://localhost:8080/api/v1/recommendation/game/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/game/{id}
+Request Method: GET
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+{
+"id":86,
+"name":"ipl"
+}
+
+Exception body:
+
+{
+"code":500,
+"description":"game with id 89 does not exist"
+}
+
+API:http://localhost:8080/api/v1/recommendation/game/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/game/{id}
+Request Method: PUT
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+{
+"id":86,
+"name":"ipl"
+}
+
+Response :
+
+Response body:
+
+{
+"id":86,
+"name":"ipl"
+}
+
+Exception body:
+
+{
+"code":500,
+"description":"game with id 89 does not exist"
+}
+
+API:http://localhost:8080/api/v1/recommendation/game/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/game/{id}
+Request Method: DELETE
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[Long]
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+{
+"id":86,
+"name":"ipl"
+}
+
+Exception body:
+
+{
+"code":500,
+"description":"game with id 89 does not exist"
+}
+
+
+
+API:http://localhost:8080/api/v1/recommendation/friendGame/{id}
+
+Request :
+
+Request URL: http://localhost:8080/api/v1/recommendation/friendGame/{id}
+Request Method: GET
+Status Code: 200  
+Remote Address: [::1]:8080
+
+Param:
+
+id:[LONG]
+
+Data:
+
+NA
+
+Response :
+
+Response body:
+
+[
+"bollywood",
+"ipl",
+"g.k"
+]
+
+Exception body:
+
+{
+"code":500,
+"description":"user with id 89 already exist"
+}
+
+
