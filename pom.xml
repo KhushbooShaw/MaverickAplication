@@ -26,5 +26,6 @@
 
 	<modules>
 		<module>Server</module>
+                <module>GameRecommendation</module>
 	</modules>
 </project>
