@@ -4,16 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Game {
-	
-	 private int gameId;
+	    private int gameId;
 	    private String gameName;
 	    private String gameImage;
 	    private String createdBy;
-	    private Date createdOn;
-	    private String gameType;
+	    private Date createdOn = new Date();
+	    private GameType gameType;
 	    private String gameDescription;
 	    private String gameRules;
-	    private int categoryId; 
+	    private int categoryId;
+	    private int userId;
 	    private GameQuestionLevel questionLevels;
 	    private GameQuestionTime questionTime;
 	    private GameQuestionScore questionScore;
@@ -49,10 +49,10 @@ public class Game {
 		public void setCreatedOn(Date createdOn) {
 			this.createdOn = createdOn;
 		}
-		public String getGameType() {
+		public GameType getGameType() {
 			return gameType;
 		}
-		public void setGameType(String gameType) {
+		public void setGameType(GameType gameType) {
 			this.gameType = gameType;
 		}
 		public String getGameDescription() {
@@ -72,6 +72,12 @@ public class Game {
 		}
 		public void setCategoryId(int categoryId) {
 			this.categoryId = categoryId;
+		}
+		public int getUserId() {
+			return userId;
+		}
+		public void setUserId(int userId) {
+			this.userId = userId;
 		}
 		public GameQuestionLevel getQuestionLevels() {
 			return questionLevels;
@@ -107,9 +113,9 @@ public class Game {
 		public String toString() {
 			return "Game [gameId=" + gameId + ", gameName=" + gameName + ", gameImage=" + gameImage + ", createdBy="
 					+ createdBy + ", createdOn=" + createdOn + ", gameType=" + gameType + ", gameDescription="
-					+ gameDescription + ", gameRules=" + gameRules + ", categoryId=" + categoryId + ", questionLevels="
-					+ questionLevels + ", questionTime=" + questionTime + ", questionScore=" + questionScore
-					+ ", topic=" + topic + ", questions=" + questions + "]";
+					+ gameDescription + ", gameRules=" + gameRules + ", categoryId=" + categoryId + ", userId=" + userId
+					+ ", questionLevels=" + questionLevels + ", questionTime=" + questionTime + ", questionScore="
+					+ questionScore + ", topic=" + topic + ", questions=" + questions + "]";
 		}
 	    
 }

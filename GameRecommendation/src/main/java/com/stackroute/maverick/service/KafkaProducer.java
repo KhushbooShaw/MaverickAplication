@@ -44,10 +44,10 @@ public class KafkaProducer {
 		log.info("sending data='{}'", gameId);
 		kafkaTemplate.send("recommendation-gameIdS.t", gameId);
 	}
-	public void sendGameid(int gameId) {
+	public void sendGameid(int[] ids) {
 
-		log.info("sending data='{}'", gameId);
-		kafkaTemplate.send("recommendation-gameId.t", gameId);
+		log.info("sending data='{}'", ids);
+		kafkaTemplate.send("recommendation-userId-gameId.t", ids);
 	}
 	
 }

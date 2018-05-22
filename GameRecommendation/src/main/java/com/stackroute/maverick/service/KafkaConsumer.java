@@ -12,6 +12,7 @@ import com.stackroute.maverick.domain.CategoriesModel;
 import com.stackroute.maverick.domain.Category;
 import com.stackroute.maverick.domain.Game;
 import com.stackroute.maverick.domain.RecommendationUser;
+import com.stackroute.maverick.domain.Result;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
 import com.stackroute.maverick.repository.CategoryRepository;
@@ -39,6 +40,13 @@ public class KafkaConsumer {
 		log.info("received content = '{}'", user.toString());
 
     }
+	@KafkaListener(topics="Results3.t")
+    public void processEvent(Result result) {
+		System.out.println("calling from Game engine");
+		System.out.println("received content = " + result.toString());
+		log.info("received content = '{}'", result.toString());
+
+    }
 	@KafkaListener(topics="recommendation-game.t")
     public void processEvent(RecommendationGame user) {
 		System.out.println("calling from kafka consumer recommendation");
@@ -52,7 +60,7 @@ public class KafkaConsumer {
 		System.out.println("Game create data from Game Manager");
 		System.out.println("received content = " + game.toString());
 		log.info("received content = '{}'", game.toString());
-		gameRepository.addGame(game.getGameId(),game.getGameName(),game.getCategoryId(),game.getGameType(),game.getGameRules(),game.getGameDescription(),new Date());
+		gameRepository.addGame(game.getGameId(),game.getGameName(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),game.getGameDescription(),new Date());
 
     }
 
