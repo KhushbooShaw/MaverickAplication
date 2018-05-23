@@ -4,7 +4,7 @@ package com.stackroute.maverick.domain;
 public class User  {
 
 	 
-	    private int id;
+	    private int userId;
 	    
 	    private String userName;
 	    
@@ -35,7 +35,7 @@ public class User  {
 	    public User(int id, String userName, String password, String email, String location, String mobile, String gender,
 	            int age) {
 	        super();
-	        this.id = id;
+	        this.userId = id;
 	        this.userName = userName;
 	        this.password = password;
 	        this.email = email;
@@ -43,10 +43,10 @@ public class User  {
 	        this.mobile = mobile;
 	        this.gender = gender;
 	        this.age = age;
-	    }    public int getId() {
-	        return id;
-	    }    public void setId(int id) {
-	        this.id = id;
+	    }    public int getUserId() {
+	        return userId;
+	    }    public void setUserId(int id) {
+	        this.userId = id;
 	    }    public String getUserName() {
 	        return userName;
 	    }    public void setUserName(String userName) {
@@ -77,7 +77,7 @@ public class User  {
 	        this.age = age;
 	    }    @Override
 	    public String toString() {
-	        return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email
+	        return "User [id=" + userId + ", userName=" + userName + ", password=" + password + ", email=" + email
 	                + ", location=" + location + ", mobile=" + mobile + ", gender=" + gender + ", age=" + age + ", role="
 	                + role + "]";
 	    }

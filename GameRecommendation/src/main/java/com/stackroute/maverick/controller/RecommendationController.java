@@ -149,7 +149,7 @@ public class RecommendationController {
 	 }
 
 	
-	 @GetMapping("/categories")
+	 @GetMapping("/categories/{userId}")
 	 public ResponseEntity<Iterable<Category>> getAllCategory() {
 	
 	 Iterable<Category> user = recommendationService.listAllCategory();
@@ -179,7 +179,7 @@ public class RecommendationController {
 	//
 	 }
 	
-	 @GetMapping("/categoryTopics/{id}")
+	 @GetMapping("/categoryTopics/{userId}/{id}")
 	 public ResponseEntity<List<RecommendationGame>> findTopicsInCategory(Category category,
 	@PathVariable("id") String id)
 	 throws Exception {

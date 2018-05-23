@@ -1,6 +1,7 @@
 package com.stackroute.maverick.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import com.stackroute.maverick.domain.Category;
 import com.stackroute.maverick.domain.Game;
 import com.stackroute.maverick.domain.RecommendationUser;
 import com.stackroute.maverick.domain.Result;
+import com.stackroute.maverick.domain.SelectedCategoriesModel;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
 import com.stackroute.maverick.repository.CategoryRepository;
@@ -74,6 +76,15 @@ public class KafkaConsumer {
 
     }
 	
+	@KafkaListener(topics="selected_categories.t")
+    public void processEvent(SelectedCategoriesModel user) {
+		System.out.println("User create data from user category");
+		
+		System.out.println("received content = " + user.toString());
+		
+		
+
+    }
 	@KafkaListener(topics="new-user-created.t")
     public void processEvent(User user) {
 		System.out.println("User create data from user manager");
@@ -81,7 +92,7 @@ public class KafkaConsumer {
 		log.info("received content = '{}'", user.toString());
 		RecommendationUser u=new RecommendationUser();
 		
-	    userRepository.saveUser(user.getId(), user.getUserName(), user.getGender(), user.getAge(), user.getLocation(),new Date());
+	    userRepository.saveUser(user.getUserId(), user.getUserName(), user.getGender(), user.getAge(), user.getLocation(),new Date());
 
     }
 	@KafkaListener(topics="recommendation-gameIdS.t")
