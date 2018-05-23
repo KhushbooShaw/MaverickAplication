@@ -35,8 +35,9 @@ public class RecommendationServiceImpl implements RecommendationService {
 
 	@Override
 	public List<RecommendationUser> listAllUser() {
-		List<RecommendationUser> users = new ArrayList<>();
-		userRepository.findAll().forEach(users::add); // fun with Java 8
+//		List<RecommendationUser> users = new ArrayList<>();
+//		userRepository.findAll().forEach(users::add); // fun with Java 8
+		List<RecommendationUser> users=userRepository.getAllUSer();
 		return users;
 	}
 

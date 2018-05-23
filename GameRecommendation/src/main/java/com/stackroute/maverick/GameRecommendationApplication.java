@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 @SpringBootApplication
 @EnableNeo4jRepositories("com.stackroute.maverick.repository")
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class GameRecommendationApplication {
 
 	public static void main(String[] args) {

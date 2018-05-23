@@ -20,8 +20,26 @@ public class RecommendationGame {
 	    private int game_id;
 	    private int game_type_id;
 	    private int topic_id;
+	    private String game_rules;
 	    private Date timestamp;
+		private String game_description;
 		
+
+		public String getGame_rules() {
+			return game_rules;
+		}
+
+		public void setGame_rules(String game_rules) {
+			this.game_rules = game_rules;
+		}
+
+		public String getGame_description() {
+			return game_description;
+		}
+
+		public void setGame_description(String game_description) {
+			this.game_description = game_description;
+		}
 
 		public int getTopic_id() {
 			return topic_id;
@@ -102,11 +120,9 @@ public class RecommendationGame {
 		public String toString() {
 			return "RecommendationGame [id=" + id + ", name=" + name + ", category_id=" + category_id + ", game_type="
 					+ game_type + ", no_of_player=" + no_of_player + ", no_of_question=" + no_of_question + ", game_id="
-					+ game_id + ", game_type_id=" + game_type_id + ", topic_id=" + topic_id + ", timestamp=" + timestamp
-					+ "]";
+					+ game_id + ", game_type_id=" + game_type_id + ", topic_id=" + topic_id + ", game_rules="
+					+ game_rules + ", timestamp=" + timestamp + ", game_description=" + game_description + "]";
 		}
-
-		
-
+       
 	
 }

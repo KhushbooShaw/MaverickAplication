@@ -18,7 +18,7 @@ public class User  {
 	  
 	    private String gender;
 	   
-	    private int age;
+	    private String age;
 	    
 	    private String role;
 	    
@@ -33,7 +33,7 @@ public class User  {
 	    
 	    }
 	    public User(int id, String userName, String password, String email, String location, String mobile, String gender,
-	            int age) {
+	            String age) {
 	        super();
 	        this.userId = id;
 	        this.userName = userName;
@@ -71,9 +71,9 @@ public class User  {
 	        return gender;
 	    }    public void setGender(String gender) {
 	        this.gender = gender;
-	    }    public int getAge() {
+	    }    public String getAge() {
 	        return age;
-	    }    public void setAge(int age) {
+	    }    public void setAge(String age) {
 	        this.age = age;
 	    }    @Override
 	    public String toString() {

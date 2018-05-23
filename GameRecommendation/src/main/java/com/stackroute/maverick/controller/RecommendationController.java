@@ -25,6 +25,7 @@ import com.stackroute.maverick.domain.User;
 //import com.stackroute.maverick.service.KafkaProducer;
 import com.stackroute.maverick.service.RecommendationService;
 
+import io.micrometer.core.annotation.Timed;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,8 +34,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/v1/recommendation")
 @RestController
 @CrossOrigin(origins = "*")
-// @Api(value = "RecommendationControllerApi", produces =
-// MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "RecommendationControllerApi", produces =MediaType.APPLICATION_JSON_VALUE)
 public class RecommendationController {
 
 	private RecommendationService recommendationService;
@@ -49,66 +49,28 @@ public class RecommendationController {
 		this.recommendationService = recommendationService;
 	}
 
-	@GetMapping("/userGame/{id}")
-	// @ApiOperation("get the list of games played by user's friends using user's
-	// id")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok", response = RecommendationGame.class) })
-	public ResponseEntity<String[]> getFriendGame(User user, @PathVariable("id") String id) throws Exception {
-
-		if (recommendationService.checkUserId(Long.parseLong(id))) {
-
-			String[] output = recommendationService.friendPlayedGame(Long.parseLong(id));
-
-			// producer.sendRecommended(output);
-
-			return new ResponseEntity<String[]>(output, HttpStatus.OK);
-		} else {
-			throw new Exception("user with id " + id + " does not exist");
-		}
-
-	}
-
+	
 	@GetMapping("/users")
-	public ResponseEntity<?> sendGameId() {
-        RecommendationUser user=new RecommendationUser();
-        user.setId((long)890);
-        user.setGender("female");
-        user.setName("Pari");
-		//recommendationService.cretaeRelation(user.getId());
+	public ResponseEntity<Iterable<RecommendationUser>> sendGameId() {
+        
 		Iterable<RecommendationUser> users = recommendationService.listAllUser();
 
 		return new ResponseEntity<Iterable<RecommendationUser>>(users, HttpStatus.OK);
 
 	}
 
-	@GetMapping("/postGameIdInKafka/{id}")
-	public ResponseEntity<?> getAllUser(@PathVariable("id") String id) {
-
-		//producer.sendGameid(id);
-		//producer.sendGameid(Integer.parseInt(id));
-
-		return new ResponseEntity<>("ok", HttpStatus.OK);
-
-	}
+	
 
 	@GetMapping("/user/{id}")
 	public ResponseEntity<RecommendationUser> findUserById(@PathVariable("id") String id) throws Exception {
 
-		// if (recommendationService.checkUserId(Long.parseLong(id))) {
-		//
-		// user.setId(Long.parseLong(id));
-		// // user.setId(Integer.parseInt(id));
-		//
-		// log.info(id);
+	
 
 			RecommendationUser user1 = recommendationService.getUserById(Long.parseLong(id));
 
-//			producer.sendUser(user1);
 
 			return new ResponseEntity<RecommendationUser>(user1, HttpStatus.OK);
-//		} else {
-//			throw new Exception("user with id " + id + " does not exist");
-//		}
+
 
 	}
     
@@ -148,7 +110,8 @@ public class RecommendationController {
 	
 	 }
 
-	
+	 @Timed(value = "getAllCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {
+	            "version", "1.0" })
 	 @GetMapping("/categories/{userId}")
 	 public ResponseEntity<Iterable<Category>> getAllCategory() {
 	
