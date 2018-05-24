@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.AdaptiveGameEngine2</groupId>
-	<artifactId>AdaptiveGameEngine2</artifactId>
+	<groupId>com.AdaptiveGameEngine</groupId>
+	<artifactId>AdaptiveGameEngine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -100,13 +100,23 @@
 			<artifactId>mockito-core</artifactId>
 		</dependency>
 		<!--eureka  -->
-		<dependency>
+		 <dependency>
 
 			<groupId>org.springframework.cloud</groupId>
 
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 
-		</dependency>
+		</dependency> 
+               <!-- grafana -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
 	</dependencies>
 
 <dependencyManagement>
