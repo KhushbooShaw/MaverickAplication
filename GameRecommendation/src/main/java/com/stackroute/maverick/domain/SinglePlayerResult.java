@@ -2,7 +2,7 @@ package com.stackroute.maverick.domain;
 
 import java.util.List;
 
-public class Result {
+public class SinglePlayerResult {
 	private List<PlayedQuestions> playedData;
 	  // private int score;
 	    private int gameSessionId;

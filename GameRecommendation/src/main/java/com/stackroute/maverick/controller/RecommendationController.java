@@ -1,5 +1,6 @@
 package com.stackroute.maverick.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stackroute.maverick.domain.Category;
+import com.stackroute.maverick.domain.RecommendationCategory;
 import com.stackroute.maverick.domain.RecommendationUser;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
+import com.stackroute.maverick.service.KafkaProducer;
 //import com.stackroute.maverick.service.KafkaProducer;
 import com.stackroute.maverick.service.RecommendationService;
 
@@ -39,8 +42,8 @@ public class RecommendationController {
 
 	private RecommendationService recommendationService;
 
-	//@Autowired
-	//KafkaProducer producer;
+	@Autowired
+	KafkaProducer producer;
 
 	Logger log = LoggerFactory.getLogger(RecommendationController.class);
 
@@ -58,120 +61,100 @@ public class RecommendationController {
 		return new ResponseEntity<Iterable<RecommendationUser>>(users, HttpStatus.OK);
 
 	}
-
+	@Timed(value = "getAllGames()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
+	@GetMapping("/games/{userId}")
+	public ResponseEntity<List<RecommendationGame>> getAllGame(@PathVariable("userId") String userId) {
 	
+	 List<RecommendationGame> mostGame = recommendationService.mostPlayedGame(Integer.parseInt(userId));
+		
+	 List<RecommendationGame> games = recommendationService.listAllGame();
+	 
+	 List<RecommendationCategory> favCategories = recommendationService.getUserFavCategory(Integer.parseInt(userId));
+	 
+	 List<RecommendationGame> games1=new ArrayList<RecommendationGame>();
+	 
+	 for(int j=0;j<favCategories.size();j++)
+	 {
+		 List<RecommendationGame> games2 = recommendationService.gamesInCategory(favCategories.get(j).getCategory_id());
+			
+		games1.addAll(games2);
 
-	@GetMapping("/user/{id}")
-	public ResponseEntity<RecommendationUser> findUserById(@PathVariable("id") String id) throws Exception {
-
+	 }
+	 
+	 int l1=mostGame.size();
+	 games1.removeAll(mostGame);
+	 int l2=games1.size();
+	 mostGame.addAll(games1);
+	 games.removeAll(mostGame);
+	 mostGame.addAll(games);
+	 
+	 for(int i=0;i<mostGame.size();i++)
+	 {
+		 for(int j=0;j<l1;j++)
+		 {
+			 mostGame.get(j).setRecommendation("Most Played Games");
+		 }
+		 for(int j=l1;j<l2;j++)
+		 {
+			 mostGame.get(j).setRecommendation("Games in Favourite Category");
+		 }
+	 }
 	
-
-			RecommendationUser user1 = recommendationService.getUserById(Long.parseLong(id));
-
-
-			return new ResponseEntity<RecommendationUser>(user1, HttpStatus.OK);
-
-
-	}
-    
-//	@GetMapping("/serach")
-//	public ResponseEntity<List<RecommendationUser>> serachTest() throws Exception {
-//		String s="Ash";
-//		List<RecommendationUser> users=recommendationService.searchTest(s, s.length());
-//		return new ResponseEntity<List<RecommendationUser>>(users, HttpStatus.OK);
-//	}
-	
-	@PostMapping("/user")
-	public ResponseEntity<RecommendationUser> addUser(@RequestBody RecommendationUser user) throws Exception {
-
-		// if(recommendationService.checkUserId(user.getId()))
-		// {
-		// throw new Exception("user with id "+user.getId()+" already exist");
-		// }
-		// // else
-		// // {
-		System.out.println("user details" + user);
-		log.info("user save in controller1");
-
-		RecommendationUser user1 = recommendationService.saveOrUpdateUser(user);
-
-		log.info("user save in controller2");
-
-		return new ResponseEntity<RecommendationUser>(user1, HttpStatus.OK);
-
-	}
-
-	 @GetMapping("/topics")
-	public ResponseEntity<Iterable<RecommendationGame>> getAllGame() {
-	//
-	 Iterable<RecommendationGame> game = recommendationService.listAllGame();
-	//
-	 return new ResponseEntity<>(game, HttpStatus.OK);
+	 return new ResponseEntity<>(mostGame, HttpStatus.OK);
 	
 	 }
 
-	 @Timed(value = "getAllCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {
-	            "version", "1.0" })
+	 @Timed(value = "getAllCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
 	 @GetMapping("/categories/{userId}")
-	 public ResponseEntity<Iterable<Category>> getAllCategory() {
+	 public ResponseEntity<List<RecommendationCategory>> getAllCategory(@PathVariable("userId") String userId) {
 	
-	 Iterable<Category> user = recommendationService.listAllCategory();
+	 List<RecommendationCategory> categories = recommendationService.listAllCategory();
+	 
+	 List<RecommendationCategory> FavCategories = recommendationService.getUserFavCategory(Integer.parseInt(userId));
+	 
+	 categories.removeAll(FavCategories);
+	 
+	 FavCategories.addAll(categories);
 	
-	 return new ResponseEntity<>(user, HttpStatus.OK);
-	//
-	 }
-	//
-      @GetMapping("/recommendation/category/{id}")
-	 public ResponseEntity<Category> findCategoryById(Category category,
-	 @PathVariable("id") String id)
-	 throws Exception {
-	//
-	// if (recommendationService.checkCategoryId(Long.parseLong(id))) {
-	//
-	// category.setId(Long.parseLong(id));
-	//
-	// log.info(id);
-	//
-      Category category1 =
-	 recommendationService.getCategoryById(Long.parseLong(id));
-	//
-	 return new ResponseEntity<Category>(category1, HttpStatus.OK);
-	// } else {
-	// throw new Exception("category with id " + id + " does not exist");
-	// }
-	//
+	 return new ResponseEntity<>(FavCategories, HttpStatus.OK);
+	
 	 }
 	
-	 @GetMapping("/categoryTopics/{userId}/{id}")
-	 public ResponseEntity<List<RecommendationGame>> findTopicsInCategory(Category category,
-	@PathVariable("id") String id)
-	 throws Exception {
+     @GetMapping("/recommendation/category/{id}")
+	 public ResponseEntity<RecommendationCategory> findCategoryById(Category category, @PathVariable("id") String id) throws Exception {
 	
-	 if (recommendationService.checkCategoryId(Long.parseLong(id))) {
+     RecommendationCategory category1 = recommendationService.getCategoryById(Integer.parseInt(id));
+	
+	 return new ResponseEntity<RecommendationCategory>(category1, HttpStatus.OK);
+	
+	 }
+     @Timed(value = "findGamesInCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
+	 @GetMapping("/categoryGames/{userId}/{id}")
+	 public ResponseEntity<List<RecommendationGame>> findGamesInCategory(Category category,@PathVariable("id") String id) throws Exception {
 	
 	 category.setId(Long.parseLong(id));
 	
-	 log.info(id);
+	 RecommendationCategory c = recommendationService.getCategoryById(Integer.parseInt(id));
 	
-	 Category c = recommendationService.getCategoryById(Long.parseLong(id));
+	 List<RecommendationGame> games = recommendationService.gamesInCategory(Integer.parseInt(id));
 	
-	 List<RecommendationGame> topics =
-	 recommendationService.topicsInCategory(Long.parseLong(id));
+	 List<RecommendationGame> games1 = recommendationService.listAllGame();
 	
-	 List<RecommendationGame> topics1 = recommendationService.listAllGame();
-	
-	 if (topics.size() != 0)
+	 if (games.size() != 0)
 	 {
-	 topics1.removeAll(topics);
-	 topics.addAll(topics1);
-	 return new ResponseEntity<>(topics, HttpStatus.OK);
+	 int l=games.size();
+	 games1.removeAll(games);
+	 games.addAll(games1);
+	 for(int i=0;i<l;i++)
+	 {
+		 games.get(i).setRecommendation("Games In Selected Category");
+	 }
+	 return new ResponseEntity<>(games, HttpStatus.OK);
 	
 	 } else {
-	 return new ResponseEntity<>(topics1, HttpStatus.OK);
+	 return new ResponseEntity<>(games1, HttpStatus.OK);
 	 }
-	 } else {
-	 throw new Exception("category with id " + id + " does not exist");
-	 }
+	 
 
 	
 	}

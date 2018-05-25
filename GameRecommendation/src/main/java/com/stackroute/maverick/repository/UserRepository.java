@@ -8,23 +8,25 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.stackroute.maverick.domain.RecommendationUser;
+import com.stackroute.maverick.domain.RecommendationCategory;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
 
 public interface UserRepository extends Neo4jRepository<RecommendationUser, Long>{
-
-	@Query("match (n:User)-[:plays]->(g:Topics) where ID(n)={id} return g;")
-	List<RecommendationGame> gamePlayedByUser(@Param("id") long id);
 	
-	@Query("match (n:User),(m:Category) where n.user_id={user_id} and m.category_id={category_id} create (n)-[r:fav_category]->(m) set r.timestamp={time} return n;")
-	List<RecommendationUser> userFavCategory(@Param("user_id") int user_id,@Param("category_id") int category_id,@Param("time") Date time);
-	@Query("create (n:User1) set n.user_id={id},n.name={name},n.gender={gender},n.age={age},n.location={location},n.timestamp={time} return n;")
-	List<RecommendationUser> saveUser(@Param("id") int id,@Param("name") String name,@Param("gender") String gender,@Param("age") String age,@Param("location") String location,@Param("time") Date time);
-	@Query("match (n:User) where n.id={id} set n.name={name},n.gender={gender} return n;")
-	List<RecommendationUser> setUserData(@Param("id") long id,@Param("name") String name,@Param("gender") String gender);
-	@Query("match (n:User),(g:Game1) where n.user_id={user_id} and g.game_id={game_id} create (n)-[r:played]->(m) set r.timestamp={time} return n;")
-	List<RecommendationUser> userPlayedGame(@Param("user_id") int user_id,@Param("game_id") int game_id,@Param("time") Date time);
-	@Query("match (n:User1) return n;")
-	List<RecommendationUser> getAllUSer();
+	@Query("match (n:RecommendationUser),(m:RecommendationCategory) where n.userId={user_id} and m.category_id={category_id} create (n)-[r:recommendation_user_fav_category]->(m) set r.timestamp={time} return n;")
+	List<RecommendationUser> setUserFavCategory(@Param("user_id") int user_id,@Param("category_id") int category_id,@Param("time") String time);
+	
+	@Query("create (n:RecommendationUser) set n.userId={id},n.userName={name},n.gender={gender},n.age={age},n.location={location},n.timestamp={time} return n;")
+	List<RecommendationUser> addUser(@Param("id") int id,@Param("name") String name,@Param("gender") String gender,@Param("age") String age,@Param("location") String location,@Param("time") String time);
+	
+	@Query("match (n:RecommendationUser),(g:RecommendationGame) where n.userId={user_id} and g.game_id={game_id} create (n)-[r:recommendation_game_playedBy_user]->(m) set r.timestamp={time} return n;")
+	List<RecommendationUser> gamePlayedByUser(@Param("user_id") int user_id,@Param("game_id") int game_id,@Param("time") String time);
+	
+	@Query("match (n:RecommendationUser) where n.userId={id} return n;")
+    List<RecommendationUser> checkUserId(@Param("id") int id);
+	
+	@Query("match (n:RecommendationUser) where n.userId={id} set n.userId={id},n.userName={name},n.gender={gender},n.age={age},n.location={location},n.timestamp={time} return n;")
+	List<RecommendationUser> updateUser(@Param("id") int id,@Param("name") String name,@Param("gender") String gender,@Param("age") String age,@Param("location") String location,@Param("time") String time);
 
 }
