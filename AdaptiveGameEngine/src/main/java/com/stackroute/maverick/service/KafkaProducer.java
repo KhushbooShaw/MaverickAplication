@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.stackroute.maverick.domain.RecommendationUser;
-import com.stackroute.maverick.domain.RecommendationGame;
+
 import com.stackroute.maverick.domain.User;
 
 
@@ -21,11 +20,11 @@ public class KafkaProducer {
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	public void sendUser(RecommendationUser user) {
-
-		log.info("sending data='{}'", user);
-		kafkaTemplate.send("recommendation-user.t", user);
-	}
+//	public void sendUser(RecommendationUser user) {
+//
+//		log.info("sending data='{}'", user);
+//		kafkaTemplate.send("recommendation-user.t", user);
+//	}
 	
 	
 }
