@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('adaptive-game-engine-client App', () => {
+describe('web-socket-demo App', () => {
   let page: AppPage;
 
   beforeEach(() => {

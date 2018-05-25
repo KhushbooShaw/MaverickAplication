@@ -1,5 +1,5 @@
 {
-  "name": "adaptive-game-engine-client",
+  "name": "web-socket-demo",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,18 +12,23 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^5.2.0",
+    "@angular/cli": "1.7.4",
+    "@angular/animations": "^5.2.10",
+    "@angular/cdk": "^5.2.5",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
     "@angular/core": "^5.2.0",
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
+    "@angular/material": "^5.2.5",
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
     "materialize-css": "^1.0.0-rc.1",
     "rxjs": "^5.5.6",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
@@ -34,7 +39,6 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
-    "ember-cli-materialize": "^0.22.0-beta.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",

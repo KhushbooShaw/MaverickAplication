@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdaptiveQuizComponent } from './adaptive-quiz.component';
+import { MultiPlayerGameComponent } from './multi-player-game.component';
 
-describe('AdaptiveQuizComponent', () => {
-  let component: AdaptiveQuizComponent;
-  let fixture: ComponentFixture<AdaptiveQuizComponent>;
+describe('MultiPlayerGameComponent', () => {
+  let component: MultiPlayerGameComponent;
+  let fixture: ComponentFixture<MultiPlayerGameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdaptiveQuizComponent ]
+      declarations: [ MultiPlayerGameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdaptiveQuizComponent);
+    fixture = TestBed.createComponent(MultiPlayerGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
