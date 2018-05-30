@@ -3,6 +3,7 @@ package com.stackroute.maverick.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.stackroute.maverick.domain.RecommendationCategory;
 import com.stackroute.maverick.domain.RecommendationUser;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
+import com.stackroute.maverick.service.KafkaConsumer;
 import com.stackroute.maverick.service.KafkaProducer;
 //import com.stackroute.maverick.service.KafkaProducer;
 import com.stackroute.maverick.service.RecommendationService;
@@ -44,6 +46,8 @@ public class RecommendationController {
 
 	@Autowired
 	KafkaProducer producer;
+	
+	
 
 	Logger log = LoggerFactory.getLogger(RecommendationController.class);
 
@@ -64,6 +68,8 @@ public class RecommendationController {
 	@Timed(value = "getAllGames()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
 	@GetMapping("/games/{userId}")
 	public ResponseEntity<List<RecommendationGame>> getAllGame(@PathVariable("userId") String userId) {
+		
+	
 	
 	 List<RecommendationGame> mostGame = recommendationService.mostPlayedGame(Integer.parseInt(userId));
 		
@@ -129,7 +135,7 @@ public class RecommendationController {
 	
 	 }
      @Timed(value = "findGamesInCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
-	 @GetMapping("/categoryGames/{userId}/{id}")
+	 @GetMapping("/categoryGames/{id}")
 	 public ResponseEntity<List<RecommendationGame>> findGamesInCategory(Category category,@PathVariable("id") String id) throws Exception {
 	
 	 category.setId(Long.parseLong(id));

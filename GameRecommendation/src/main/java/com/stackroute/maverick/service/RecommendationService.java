@@ -25,5 +25,7 @@ public interface RecommendationService {
 	List<RecommendationGame> gamesInCategory(int parseInt);
     
 	List<RecommendationGame> mostPlayedGame(int id);
+	
+	
 
 }

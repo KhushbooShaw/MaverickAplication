@@ -6,6 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.maverick.domain.Category;
@@ -13,6 +17,7 @@ import com.stackroute.maverick.domain.RecommendationCategory;
 import com.stackroute.maverick.domain.RecommendationUser;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
+import com.stackroute.maverick.repository.CategoriesRepository;
 import com.stackroute.maverick.repository.CategoryRepository;
 import com.stackroute.maverick.repository.GameRespository;
 import com.stackroute.maverick.repository.UserRepository;
@@ -24,6 +29,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 	private UserRepository userRepository;
 	private GameRespository gameRepository;
 	private CategoryRepository categoryRepository;
+	private CategoriesRepository categoriesRepository;
 	Logger log = LoggerFactory.getLogger(RecommendationServiceImpl.class);
 
 	@Autowired
@@ -81,6 +87,10 @@ public class RecommendationServiceImpl implements RecommendationService {
 		return gameRepository.gamemostPlayedByUser(id);
 	}
 
+	
+
+	
+	
 
 	
 

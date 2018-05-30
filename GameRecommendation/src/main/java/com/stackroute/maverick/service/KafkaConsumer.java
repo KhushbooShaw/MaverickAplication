@@ -20,6 +20,7 @@ import com.stackroute.maverick.domain.SinglePlayerResult;
 import com.stackroute.maverick.domain.SelectedCategoriesModel;
 import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
+import com.stackroute.maverick.repository.CategoriesRepository;
 import com.stackroute.maverick.repository.CategoryRepository;
 import com.stackroute.maverick.repository.GameRespository;
 import com.stackroute.maverick.repository.UserRepository;
@@ -35,6 +36,10 @@ public class KafkaConsumer {
 	private GameRespository gameRepository;
     @Autowired
 	private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+    
+   
 	
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -73,23 +78,27 @@ public class KafkaConsumer {
 		log.info("received content = '{}'", game.toString());
 		if(gameRepository.checkGameId(game.getGameId()).size()==0)
 		{
-		    gameRepository.addGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),11,strDate);
+		    gameRepository.addGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 		}
 		else
 		{
-			gameRepository.updateGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),11,strDate);
+			gameRepository.updateGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 			
 		}  
 		}
 
-	@KafkaListener(topics=" Categories.t")
+	@KafkaListener(topics="Categories.t")
     public void processEvent(CategoriesModel category) {
 		System.out.println("Category create data from Question Generation");
 		System.out.println("received content = " + category.toString());
 		log.info("received content = '{}'", category.toString());
+		if(categoriesRepository.checkCategoryId(1).size()==0)
+		{
+		categoriesRepository.addCategory(1);
+		}
 		if(categoryRepository.checkCategoryId(category.getCategoryId()).size()==0)
 		{
-		    categoryRepository.addCategory(category.getCategoryId(), category.getCategoryName(), category.getCategoryImage(),strDate);
+		    categoryRepository.addCategory(1,category.getCategoryId(), category.getCategoryName(), category.getCategoryImage(),strDate);
 		}
 		else
 		{
@@ -103,7 +112,7 @@ public class KafkaConsumer {
 		
 		System.out.println("received content = " + user.toString());
 		
-		userRepository.setUserFavCategory(user.getUserId(), user.getTid(), strDate);
+		userRepository.setUserFavCategory(user.getUserId(), user.getSelectedCategoryId(), strDate);
 
     }
 	@KafkaListener(topics="new-user-created.t")
@@ -123,7 +132,5 @@ public class KafkaConsumer {
 		}
     }
 	
-	
-
 
 }

@@ -39,7 +39,7 @@ public class KafkaConsumerConfig {
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
 				StringDeserializer.class);
 		// allows a pool of processes to divide the work of consuming and processing records
-		props.put(ConsumerConfig.GROUP_ID_CONFIG, "jsa-group");
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "jsa1-group");
 		// automatically reset the offset to the earliest offset
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		//deserializing the value
