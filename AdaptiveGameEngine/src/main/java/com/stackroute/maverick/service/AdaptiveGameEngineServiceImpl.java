@@ -14,6 +14,8 @@ import com.stackroute.maverick.domain.AdaptiveLevel;
 import com.stackroute.maverick.domain.AdaptiveOption;
 import com.stackroute.maverick.domain.AdaptiveQuestion;
 import com.stackroute.maverick.domain.AdaptiveTopic;
+import com.stackroute.maverick.domain.AdaptiveUser;
+import com.stackroute.maverick.repository.AdaptiveCategoriesRepository;
 import com.stackroute.maverick.repository.AdaptiveCategoryRepository;
 import com.stackroute.maverick.repository.AdaptiveLevelRepository;
 import com.stackroute.maverick.repository.AdaptiveOptionRepository;
@@ -26,6 +28,8 @@ import com.stackroute.maverick.repository.AdaptiveUserRepository;
 
 @Service
 public class AdaptiveGameEngineServiceImpl implements AdaptiveGameEngineService {
+	
+	private AdaptiveCategoriesRepository categoriesRepository;
 	
 	private AdaptiveCategoryRepository categoryRepository;
 	
@@ -153,6 +157,108 @@ public class AdaptiveGameEngineServiceImpl implements AdaptiveGameEngineService 
 			int option_id, String option_value, boolean ans, String time) {
 		// TODO Auto-generated method stub
 		return optionRepository.addOptionInQuestionOfLevel3(category_id, topic_id, questionId, option_id, option_value, ans, time);
+	}
+
+	@Override
+	public void createCategoriesNode() {
+		if(categoriesRepository.checkCategoryId(1).size()==0)
+		{
+			categoriesRepository.addCategory(1);
+		}
+		
+	}
+
+	@Override
+	public List<AdaptiveUser> checkUserId(int user_id) {
+		// TODO Auto-generated method stub
+		return userRepository.checkUserId(user_id);
+	}
+
+	@Override
+	public List<AdaptiveUser> createUSer(int user_id, String time) {
+		// TODO Auto-generated method stub
+		return userRepository.createUSer(user_id, time);
+	}
+
+	@Override
+	public List<AdaptiveUser> relateUserWithTopic(int user_id, int topic_id, int category_id) {
+		// TODO Auto-generated method stub
+		return userRepository.relateUserWithTopic(user_id, topic_id, category_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> listOfQuestionInLevel1(int category_id, int topic_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.listOfQuestionInLevel1(category_id, topic_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> listOfQuestionInLevel2(int category_id, int topic_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.listOfQuestionInLevel2(category_id, topic_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> listOfQuestionInLevel3(int category_id, int topic_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.listOfQuestionInLevel3(category_id, topic_id);
+	}
+
+	@Override
+	public List<AdaptiveOption> listOfOptionInQuestionInLevel1(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.listOfOptionInQuestionInLevel1(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveOption> listOfOptionInQuestionInLevel2(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.listOfOptionInQuestionInLevel2(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveOption> listOfOptionInQuestionInLevel3(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.listOfOptionInQuestionInLevel3(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveOption> correctOptionInQuestionInLevel3(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.correctOptionInQuestionInLevel3(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveOption> correctOptionInQuestionInLevel2(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.correctOptionInQuestionInLevel2(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveOption> correctOptionInQuestionInLevel1(int category_id, int topic_id, int questionId) {
+		// TODO Auto-generated method stub
+		return optionRepository.correctOptionInQuestionInLevel1(category_id, topic_id, questionId);
+	}
+
+	@Override
+	public List<AdaptiveUser> optionAnsweredByUserInLevel1(int category_id, int topic_id, int questionId, int option_id,
+			int user_id) {
+		// TODO Auto-generated method stub
+		return userRepository.optionAnsweredByUserInLevel1(category_id, topic_id, questionId, option_id, user_id);
+	}
+
+	@Override
+	public List<AdaptiveUser> optionAnsweredByUserInLevel2(int category_id, int topic_id, int questionId, int option_id,
+			int user_id) {
+		// TODO Auto-generated method stub
+		return userRepository.optionAnsweredByUserInLevel2(category_id, topic_id, questionId, option_id, user_id);
+	}
+
+	@Override
+	public List<AdaptiveUser> optionAnsweredByUserInLevel3(int category_id, int topic_id, int questionId, int option_id,
+			int user_id) {
+		// TODO Auto-generated method stub
+		return userRepository.optionAnsweredByUserInLevel3(category_id, topic_id, questionId, option_id, user_id);
 	}
 
 }

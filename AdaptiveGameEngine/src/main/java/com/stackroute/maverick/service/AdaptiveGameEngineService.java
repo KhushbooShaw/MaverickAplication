@@ -10,10 +10,13 @@ import com.stackroute.maverick.domain.AdaptiveLevel;
 import com.stackroute.maverick.domain.AdaptiveOption;
 import com.stackroute.maverick.domain.AdaptiveQuestion;
 import com.stackroute.maverick.domain.AdaptiveTopic;
+import com.stackroute.maverick.domain.AdaptiveUser;
 import com.stackroute.maverick.domain.Category;
 import com.stackroute.maverick.domain.User;
 
 public interface AdaptiveGameEngineService {
+	
+ void createCategoriesNode();
 	
  List<AdaptiveCategory> addCategory(int category_id,String time);
  
@@ -47,4 +50,34 @@ public interface AdaptiveGameEngineService {
 
  List<AdaptiveOption> addOptionInQuestionOfLevel3(int category_id,int topic_id,int questionId,int option_id,String option_value,boolean ans,String time);
 
+ List<AdaptiveUser> checkUserId(int user_id);
+ 
+ List<AdaptiveUser> createUSer(int user_id,String time);
+ 
+ List<AdaptiveUser> relateUserWithTopic(int user_id,int topic_id,int category_id);
+ 
+ List<AdaptiveQuestion> listOfQuestionInLevel1(int category_id,int topic_id);
+ 
+ List<AdaptiveQuestion> listOfQuestionInLevel2(int category_id,int topic_id);
+ 
+ List<AdaptiveQuestion> listOfQuestionInLevel3(int category_id,int topic_id);
+ 
+ List<AdaptiveOption> listOfOptionInQuestionInLevel1(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveOption> listOfOptionInQuestionInLevel2(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveOption> listOfOptionInQuestionInLevel3(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveOption> correctOptionInQuestionInLevel3(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveOption> correctOptionInQuestionInLevel2(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveOption> correctOptionInQuestionInLevel1(int category_id,int topic_id,int questionId);
+ 
+ List<AdaptiveUser> optionAnsweredByUserInLevel1(int category_id,int topic_id,int questionId,int option_id,int user_id);
+ 
+ List<AdaptiveUser> optionAnsweredByUserInLevel2(int category_id,int topic_id,int questionId,int option_id,int user_id);
+ 
+ List<AdaptiveUser> optionAnsweredByUserInLevel3(int category_id,int topic_id,int questionId,int option_id,int user_id);
+ 
 }
