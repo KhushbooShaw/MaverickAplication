@@ -261,4 +261,28 @@ public class AdaptiveGameEngineServiceImpl implements AdaptiveGameEngineService 
 		return userRepository.optionAnsweredByUserInLevel3(category_id, topic_id, questionId, option_id, user_id);
 	}
 
+	@Override
+	public List<AdaptiveUser> checkingUserPlayedTopic(int user_id, int topic_id, int category_id) {
+		// TODO Auto-generated method stub
+		return userRepository.checkingUserPlayedTopic(user_id, topic_id, category_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> questionsAnsweredByUserInLevel1(int user_id, int topic_id, int category_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.questionsAnsweredByUserInLevel1(user_id, topic_id, category_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> questionsAnsweredByUserInLevel2(int user_id, int topic_id, int category_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.questionsAnsweredByUserInLevel2(user_id, topic_id, category_id);
+	}
+
+	@Override
+	public List<AdaptiveQuestion> questionsAnsweredByUserInLevel3(int user_id, int topic_id, int category_id) {
+		// TODO Auto-generated method stub
+		return questionRepository.questionsAnsweredByUserInLevel3(user_id, topic_id, category_id);
+	}
+
 }

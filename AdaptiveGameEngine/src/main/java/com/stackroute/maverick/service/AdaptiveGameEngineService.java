@@ -80,4 +80,12 @@ public interface AdaptiveGameEngineService {
  
  List<AdaptiveUser> optionAnsweredByUserInLevel3(int category_id,int topic_id,int questionId,int option_id,int user_id);
  
+ List<AdaptiveUser> checkingUserPlayedTopic(int user_id,int topic_id,int category_id);
+ 
+ List<AdaptiveQuestion> questionsAnsweredByUserInLevel1(int user_id,int topic_id,int category_id);
+ 
+ List<AdaptiveQuestion> questionsAnsweredByUserInLevel2(int user_id,int topic_id,int category_id);
+ 
+ List<AdaptiveQuestion> questionsAnsweredByUserInLevel3(int user_id,int topic_id,int category_id);
+ 
 }
