@@ -22,7 +22,7 @@ export class MultiPlayerGameComponent implements OnInit {
   
   userId: number;
   userName: string;
-  questionId: string;
+  questionId: number;
   questionStamp: string;
 
   op1: string;
@@ -40,13 +40,6 @@ export class MultiPlayerGameComponent implements OnInit {
 
   //jsonData: ResponseData
 
-  users = [
-    { userId: "101", userName: "Ajay", score: "10" },
-    { userId: "102", userName: "Fazeel", score: "20" },
-    { userId: "103", userName: "Ajinkya", score: "15" },
-    { userId: "104", userName: "Satyaki", score: "13" }
-  ];
-
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
@@ -60,11 +53,7 @@ export class MultiPlayerGameComponent implements OnInit {
     });
   }
   connect() {
-    //connect to stomp where stomp endpoint is exposed
-    //let ws = new SockJS(http://172.23.238.179:8080/greeting);
-    // let socket = new WebSocket("ws://localhost:8080/greeting");
-    // this.ws = Stomp.over(socket);
-
+    
     var socket = new SockJS("http://localhost:8081/greeting");
     this.ws = Stomp.over(socket);
 
@@ -102,13 +91,12 @@ export class MultiPlayerGameComponent implements OnInit {
   sendResponse() {
     console.log("Data Send ==========>");
       let data = JSON.stringify({
-        name: "100",
-        questionStamp: "dummy data",
         questionId: "11",
         selectedResponse: "any",
       });
       console.log("edelwksamdkmsdasmk==============>" + data);
       this.ws.send("/app/message", {}, data);
+      
     } 
       // let data = JSON.stringify({
       //   userName: this.userName,
@@ -122,15 +110,13 @@ export class MultiPlayerGameComponent implements OnInit {
       sendAnswer(answer){
         this.selectedAnswer = answer;
         let ans = JSON.stringify({
-
-            userId: 100,
-            questionStamp: this.questionStamp,
             questionId: this.questionId,
             selectedResponse: this.selectedAnswer,
 
           });
           console.log("selected data ==============>" + ans);
           this.ws.send("/app/message", {}, ans);
+          this.i++;
       }
 
   showGreeting(message) {
@@ -138,30 +124,31 @@ export class MultiPlayerGameComponent implements OnInit {
     this.message=message;
     console.log("===>"+message)
     console.log("Type of Data =====> "+typeof message)
-  //   let rep = message.replace("{","").replace("}","").replace(/"/g,'');
-  //   let quest = rep.split(",");
-  //  // let question = quest.split(":");
-  //   for(let j = 0;j<=quest.length;j++){
-  //     this.data[j] = quest[j];
-  //   }
-  //   console.log("Hello");
-  //   this.questionId = this.data[0].split(':')[1];
-  //   console.log(this.questionId);
-  //   this.questionStamp = this.data[1].split(':')[1];
-  //   console.log(this.questionStamp)
-  //   this.op1 = this.data[2].split(":")[1]
-  //   this.op2 = this.data[3].split(":")[1]
-  //   this.op3 = this.data[4].split(":")[1]
-  //   this.op4 = this.data[5].split(":")[1]
+    let rep = message.replace("{","").replace("}","").replace(/"/g,'');
+    let quest = rep.split(",");
+    console.log(quest);
+   // let question = quest.split(":");
+    for(let j = 0;j<=quest.length;j++){
+      this.data[j] = quest[j];
+    }
+    console.log("Hello");
+    this.questionId = this.i;
+    console.log(this.questionId);
+    this.questionStamp = this.data[2].split(':')[1];
+    console.log("kkkk="+this.questionStamp)
+    this.op1 = this.data[3].split(":")[1]
+    this.op2 = this.data[4].split(":")[1]
+    this.op3 = this.data[5].split(":")[1]
+    this.op4 = this.data[6].split(":")[1]
       
-  //   console.log(this.op1)
-  //   console.log("sjewrur=========================================>"+this.options)
+    console.log(this.op1)
+    console.log("sjewrur=========================================>"+this.options)
   
-  //   console.log("splited data=====>"+ this.data)
+    console.log("splited data=====>"+ this.data)
 
-  //   this.data.push();
+    this.data.push();
 
-    // console.log("Response Data : " + this.data);
+    console.log("Response Data : " + this.data);
   }
 
   setConnected(connected) {
@@ -171,6 +158,6 @@ export class MultiPlayerGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.connect();
+    this.connect();
   }
 }
