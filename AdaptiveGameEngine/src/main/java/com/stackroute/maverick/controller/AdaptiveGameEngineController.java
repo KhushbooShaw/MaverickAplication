@@ -58,8 +58,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/v1/adaptiveGameEngine")
 @RestController
 @CrossOrigin("*")
-// @Api(value = "RecommendationControllerApi", produces =
-// MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "AdaptiveGameEngineControllerApi", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdaptiveGameEngineController {
 
 	private AdaptiveGameEngineService adaptiveService;
@@ -94,7 +93,7 @@ public class AdaptiveGameEngineController {
     
     private int game_id;
     
-    int i1,i2,i3;
+    int i1,i2,i3,last;
     
     Date date ;
     DateFormat dateFormat ;
@@ -131,11 +130,12 @@ public class AdaptiveGameEngineController {
         i1=0;
         i2=0;
         i3=0;
+        last=0;
 	}
 	
 	
 	@RequestMapping("/gameManagerData")
-    public Game[] findPeers() {
+    public Game[] gettingDataFromGameManager() {
 
 //        Application application = eurekaClient.getApplication(employeeSearchServiceId);
 //
@@ -145,7 +145,7 @@ public class AdaptiveGameEngineController {
 
 //        System.out.println("URL" + url);
 		
-		System.out.println("IP:"+gameManagerIPAddress);
+		
         
        String url=gameManagerIPAddress+"/api/game/games";
 
@@ -447,25 +447,101 @@ public class AdaptiveGameEngineController {
    @MessageMapping("/message")
    @SendTo("/topic/reply")
 	public Questions processMessageFromClient(@Payload String message) throws Exception {
-	  
-	   Questions questions=questionsInL1.get(i1);
-	   i1++;
-		String answer = "Client Message : \t"+new Gson().fromJson(message, Map.class).get("selectedResponse").toString();
-//		while(i<10)
-//		{
-//		while(i1<10)
-//		{
-//		questions=questionsInL1.get(i1);
-//		i1++;
-//		
-//		}
-//		
-//		}
-//		response.get(i).setQuestionId(questions.getQuestionId());
-//		response.get(i).setQuestionStem(questions.getQuestionStem());
-//		response.get(i).setQuestionLevel(questions.getQuestionLevel());
-//		response.get(i).setOption1(questions.getOption1());
-//		i++;
+	    int score=0;
+	    
+	   	String answer = new Gson().fromJson(message, Map.class).get("selectedResponse").toString();
+		if(i!=0)
+		{
+			response.get(i-1).setUserAnswered(answer);
+		}
+		  Questions questions=new Questions();
+		   if(i1<=3)
+		   {
+		   questions=questionsInL1.get(i1);
+		   i1++;
+		   }
+		   if(i1>3 && i2==0)
+		   {
+			   last=response.size();
+			
+			for(int j=0;j<response.size();j++)
+			{
+				
+				if(response.get(j).getCorrectAnswer().equals(response.get(j).getUserAnswered()))
+				{
+					
+					score++;
+					
+				}
+			}
+			
+			float v=(score/response.size())*100;
+			
+			if(v>=60)
+			{
+				
+				questions=questionsInL2.get(i2);
+				
+				i2++;
+			
+			}
+		   }
+		   if(i2 > 0 && i2 <= 4)
+		   {
+			   questions=questionsInL2.get(i2); 
+			   i2++;
+		   }
+		  
+		   System.out.println("left="+last);
+		   System.out.println("l2="+i2);
+		   if(i2 > 4 && i3 == 0)
+		   {
+			System.out.println("lll="+i2);
+			for(int j=last;j<response.size();j++)
+			{
+				System.out.println("1");
+				if(response.get(j).getCorrectAnswer().equals(response.get(j).getUserAnswered()))
+				{
+					System.out.println("2");
+					score++;
+					System.out.println("score="+score);
+				}
+			}
+			System.out.println("score outside="+score);
+			float v=(score/(response.size()-last))*100;
+			System.out.println("hello = "+v);
+			if(v>=60)
+			{
+				System.out.println("3");
+				questions=questionsInL3.get(i3);
+				System.out.println("-----------"+questions.getQuestionLevel());
+				i3++;
+			
+			}
+		   }
+		   if(i3>0)
+		   {
+			   questions=questionsInL3.get(i3); 
+			   i3++;
+		   }
+		AdaptiveResponseQuestion adaptiveResponseQuestion=new AdaptiveResponseQuestion();
+		adaptiveResponseQuestion.setQuestionId(questions.getQuestionId());
+		adaptiveResponseQuestion.setQuestionLevel(questions.getQuestionLevel());
+		adaptiveResponseQuestion.setQuestionStem(questions.getQuestionStem());
+		adaptiveResponseQuestion.setOption1(questions.getOption1());
+		adaptiveResponseQuestion.setOption2(questions.getOption2());
+		adaptiveResponseQuestion.setOption3(questions.getOption3());
+		adaptiveResponseQuestion.setOption4(questions.getOption4());
+		adaptiveResponseQuestion.setCorrectAnswer(questions.getCorrectAnswer());
+		response.add(adaptiveResponseQuestion);
+		if(i==10)
+		{
+		adaptiveResult.setResponse(response);
+		System.out.println(adaptiveResult);
+		}
+		i++;
+		System.out.println("checking user id in data :"+this.user_id);
+		System.out.println("checking user id in result :"+this.adaptiveResult.getUser_id());
         System.out.println("message :"+message);
 		System.out.println("answer Getting..."+answer);
 		return questions;
