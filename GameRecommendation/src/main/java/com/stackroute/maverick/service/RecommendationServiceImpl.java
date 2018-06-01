@@ -39,48 +39,68 @@ public class RecommendationServiceImpl implements RecommendationService {
 		this.gameRepository = gameRepository;
 		this.categoryRepository = categoryRepository;
 	}
-
+    //method for getting all user nodes
+	
 	@Override
 	public List<RecommendationUser> listAllUser() {
 		List<RecommendationUser> users = new ArrayList<>();
+		
+		//calling repository method for getting all user
+		
 		userRepository.findAll().forEach(users::add);
 		return users;
 	}
 
+	//method for getting all games nodes
+	
 	@Override
 	public List<RecommendationGame> listAllGame() {
 		List<RecommendationGame> games = new ArrayList<>();
 
+		//calling repository method for getting all games
+		
 		gameRepository.findAll().forEach(games::add);
 		return games;
 	}
     
+	//method for getting all category nodes
+	
 	@Override
 	public List<RecommendationCategory> listAllCategory() {
 		List<RecommendationCategory> games = new ArrayList<>();
 
+		//calling repository method for getting all categories
+		
 		categoryRepository.findAll().forEach(games::add);
 		return games;
 	}
 
+	//method for getting user favourite category
+	
     @Override
 	public List<RecommendationCategory> getUserFavCategory(int user_id) {
 
 		return categoryRepository.getUserFavCategory(user_id);
 	}
 
+    //method for getting category by category id
+    
 	@Override
 	public RecommendationCategory getCategoryById(int id) {
 		
 		return categoryRepository.checkCategoryId(id).get(0);
 	}
 
+	//method  for getting games in a category using category id
+	
 	@Override
 	public List<RecommendationGame> gamesInCategory(int id) {
 		
 		return gameRepository.gamesInCategory(id);
 	}
 
+	//getting most played games by user  based on user id
+	
 	@Override
 	public List<RecommendationGame> mostPlayedGame(int id) {
 		

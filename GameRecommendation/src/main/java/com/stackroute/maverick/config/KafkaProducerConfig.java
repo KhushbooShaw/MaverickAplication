@@ -18,10 +18,13 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @Configuration
 public class KafkaProducerConfig {
 
+	//getting kafka server value from properties file
 	
 	@Value("${kafka.bootstrap-servers}")
 	 private String bootstrapServers;
 
+	//config for making producer
+	
 	 @Bean
 	 public Map<String, Object> producerConfigs() {
 	      Map<String, Object> props = new HashMap<>();
@@ -37,6 +40,7 @@ public class KafkaProducerConfig {
 	 public ProducerFactory<String, Object> producerFactory1() {
 	   return new DefaultKafkaProducerFactory<>(producerConfigs());
 	 }
+	 //declaring kafka templete with data object type
 	 @Bean
 	 public KafkaTemplate<String, Object> kafkaTemplate1() {
 	   return new KafkaTemplate<>(producerFactory1());

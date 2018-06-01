@@ -21,6 +21,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfiguration {
 	
+	//setting values required for swagger initializer
+	
 	public static final String SWAGGER_API_VERSION = "1.0";
 	
 	public static final String LICENSE = "license";
@@ -34,8 +36,9 @@ public class SwaggerConfiguration {
 				.build();
 	}
 
+	//docket declaration
 	@Bean
-	public Docket resturantApi() {
+	public Docket RecommendationApi() {
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).pathMapping("/").select()
 				.paths(PathSelectors.regex("/api/v1.*")).build();
 	}

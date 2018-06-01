@@ -1,5 +1,7 @@
 package com.stackroute.maverick.exception;
 
+//simple custom exception class
+
 @SuppressWarnings("serial")
 public class MyException extends Exception {
 

@@ -55,7 +55,8 @@ public class RecommendationController {
 	public void setProductService(RecommendationService recommendationService) {
 		this.recommendationService = recommendationService;
 	}
-
+    
+	//for getting the all user nodes in neo4j
 	
 	@GetMapping("/users")
 	public ResponseEntity<Iterable<RecommendationUser>> sendGameId() {
@@ -65,19 +66,29 @@ public class RecommendationController {
 		return new ResponseEntity<Iterable<RecommendationUser>>(users, HttpStatus.OK);
 
 	}
+	
+	//method for getting recommended game base on user id 
+	//added grafana annotation
+	
 	@Timed(value = "getAllGames()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
 	@GetMapping("/games/{userId}")
 	public ResponseEntity<List<RecommendationGame>> getAllGame(@PathVariable("userId") String userId) {
 		
-	
+	//getting the most played game by user 
 	
 	 List<RecommendationGame> mostGame = recommendationService.mostPlayedGame(Integer.parseInt(userId));
+	 
+	 //getting list of all games
 		
 	 List<RecommendationGame> games = recommendationService.listAllGame();
+	 
+	 // getting list of user's favourite category
 	 
 	 List<RecommendationCategory> favCategories = recommendationService.getUserFavCategory(Integer.parseInt(userId));
 	 
 	 List<RecommendationGame> games1=new ArrayList<RecommendationGame>();
+	 
+	 //storing the games in favourite category of user in list games1
 	 
 	 for(int j=0;j<favCategories.size();j++)
 	 {
@@ -87,12 +98,16 @@ public class RecommendationController {
 
 	 }
 	 
+	 //logic for removing the duplicates from three different lists of game and making them one list
+	 
 	 int l1=mostGame.size();
 	 games1.removeAll(mostGame);
 	 int l2=games1.size();
 	 mostGame.addAll(games1);
 	 games.removeAll(mostGame);
 	 mostGame.addAll(games);
+	 
+	 //setting the recommendation field in games node
 	 
 	 for(int i=0;i<mostGame.size();i++)
 	 {
@@ -110,13 +125,21 @@ public class RecommendationController {
 	
 	 }
 
+	//getting the list of category based on user id
+	
 	 @Timed(value = "getAllCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
 	 @GetMapping("/categories/{userId}")
 	 public ResponseEntity<List<RecommendationCategory>> getAllCategory(@PathVariable("userId") String userId) {
 	
+     //getting list of all category
+		 
 	 List<RecommendationCategory> categories = recommendationService.listAllCategory();
 	 
+	 //getting list of user's favourite category
+	 
 	 List<RecommendationCategory> FavCategories = recommendationService.getUserFavCategory(Integer.parseInt(userId));
+	 
+	 //removing the duplicate data in list and making single list 
 	 
 	 categories.removeAll(FavCategories);
 	 
@@ -126,25 +149,32 @@ public class RecommendationController {
 	
 	 }
 	
+	 //getting category based on category id
+	 
      @GetMapping("/recommendation/category/{id}")
 	 public ResponseEntity<RecommendationCategory> findCategoryById(Category category, @PathVariable("id") String id) throws Exception {
-	
+    	 
      RecommendationCategory category1 = recommendationService.getCategoryById(Integer.parseInt(id));
 	
 	 return new ResponseEntity<RecommendationCategory>(category1, HttpStatus.OK);
 	
 	 }
+     
+     //getting the list of games based on category id
+     
      @Timed(value = "findGamesInCategory()", histogram = true, percentiles = { 0.95 }, extraTags = {"version", "1.0" })
 	 @GetMapping("/categoryGames/{id}")
 	 public ResponseEntity<List<RecommendationGame>> findGamesInCategory(Category category,@PathVariable("id") String id) throws Exception {
 	
-	 category.setId(Long.parseLong(id));
-	
-	 RecommendationCategory c = recommendationService.getCategoryById(Integer.parseInt(id));
+     //getting the games in the category based on category id
 	
 	 List<RecommendationGame> games = recommendationService.gamesInCategory(Integer.parseInt(id));
+	 
+	 //getting all games
 	
 	 List<RecommendationGame> games1 = recommendationService.listAllGame();
+	 
+	 //logic for removing the duplicate data from all games and making two into one list
 	
 	 if (games.size() != 0)
 	 {

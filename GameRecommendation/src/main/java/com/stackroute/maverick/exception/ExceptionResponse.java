@@ -1,7 +1,7 @@
 package com.stackroute.maverick.exception;
 
 import org.springframework.stereotype.Component;
-
+//converter class
 @Component
 public class ExceptionResponse {
 	

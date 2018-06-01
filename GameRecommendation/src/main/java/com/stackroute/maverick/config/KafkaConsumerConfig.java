@@ -23,6 +23,8 @@ import com.stackroute.maverick.service.KafkaConsumer;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
+	
+	//getting kafka server value from properties file
 
 	@Value("${kafka.bootstrap-servers}")
 	private String bootstrapServer;
@@ -46,9 +48,6 @@ public class KafkaConsumerConfig {
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 		//adding all classes to deserialization
 		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-//		DefaultKafkaConsumerFactory<String, String> consumerFactory =
-//			    new DefaultKafkaConsumerFactory<String, String>(props,
-//			        new StringDeserializer(), new StringDeserializer());
 
 		return props;
 	}
@@ -67,7 +66,7 @@ public class KafkaConsumerConfig {
 		return factory;
 	}
 	
-
+    //bean for kafka receiver
 	@Bean
 	public KafkaConsumer receiver() {
 		return new KafkaConsumer();

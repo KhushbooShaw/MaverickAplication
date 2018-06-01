@@ -12,7 +12,7 @@ import com.stackroute.maverick.domain.RecommendationGame;
 import com.stackroute.maverick.domain.User;
 
 
-
+///class for producing data in kafka
 @Service
 public class KafkaProducer {
 
@@ -21,34 +21,6 @@ public class KafkaProducer {
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-//	@Value("${jsa.kafka.topic}")
-//	String kafkaTopic;
-
-	public void sendUser(RecommendationUser user) {
-
-		log.info("sending data='{}'", user);
-		kafkaTemplate.send("recommendation-user.t", user);
-	}
-	public void sendGame(RecommendationGame game) {
-
-		log.info("sending data='{}'", game);
-		kafkaTemplate.send("recommendation-game.t", game);
-	}
-	public void sendRecommended(String[] game) {
-
-		log.info("sending data='{}'", game.length);
-		kafkaTemplate.send("recommendation-game-by-user-friends.t", game);
-	}
-	public void sendGameid(String gameId) {
-
-		log.info("sending data='{}'", gameId);
-		kafkaTemplate.send("recommendation-gameIdS.t", gameId);
-	}
-	public void sendGameid(int[] ids) {
-
-		log.info("sending data='{}'", ids);
-		kafkaTemplate.send("recommendation-userId-gameId.t", ids);
-	}
 	
 }
 

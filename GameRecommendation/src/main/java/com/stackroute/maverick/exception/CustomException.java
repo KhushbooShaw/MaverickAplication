@@ -2,6 +2,8 @@ package com.stackroute.maverick.exception;
 
 import org.springframework.stereotype.Component;
 
+//custom exception class domain
+
 @SuppressWarnings("serial")
 @Component
 public class CustomException extends Exception {

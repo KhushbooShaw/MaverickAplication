@@ -39,16 +39,21 @@ public class KafkaConsumer {
     @Autowired
     private CategoriesRepository categoriesRepository;
     
-   
-	
+    //making object of date and converting into string
+    
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
     String strDate = dateFormat.format(date);
+    
+    //consuming data produce by single player game engine
+    
 	@KafkaListener(topics="Results3.t")
     public void processEvent(SinglePlayerResult result) {
-		System.out.println("calling from Game engine");
-		System.out.println("received content = " + result.toString());
+		
 		log.info("received content = '{}'", result.toString());
+		
+		//logic for checking and making user played games
+		
 		if(result.getPlayedData().size()>0)
 		{
 			userRepository.gamePlayedByUser(result.getPlayedData().get(0).getUserId(), result.getPlayedData().get(0).getGameId(), strDate);
@@ -56,77 +61,103 @@ public class KafkaConsumer {
 		}
 	}
 
+	//consuming from game manager when a single player game is created
+	
 	@KafkaListener(topics="created-new-game.t")
     public void processEvent(Game game) {
-		System.out.println("Game create data from Game Manager");
-		System.out.println("received content = " + game.toString());
+		
 		log.info("received content = '{}'", game.toString());
+		
 		if(gameRepository.checkGameId(game.getGameId()).size()==0)
 		{
+			//creating new game node
+			
 		    gameRepository.addGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 		}
 		else
 		{
+			//updating existing game node
+			
 			gameRepository.updateGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 			
 		}
     }
+	
+	//consuming from game manager when a multi player game is created
+	
 	@KafkaListener(topics="created-new-multiplayer-game.t")
     public void processEvent(MultiPlayerGame game) {
-		System.out.println("Game create data from Game Manager");
-		System.out.println("received content = " + game.toString());
+		
+
 		log.info("received content = '{}'", game.toString());
 		if(gameRepository.checkGameId(game.getGameId()).size()==0)
 		{
+			//creating new game node
+			
 		    gameRepository.addGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 		}
 		else
 		{
+			//updating existing game node
 			gameRepository.updateGame(game.getGameId(),game.getGameName(),game.getGameImage(),game.getCategoryId(),game.getGameType().getGameTypeId(),game.getGameType().getGameTypeName(),game.getGameRules(),"Recommended",game.getGameDescription(),game.getTopic().getTopicId(),strDate);
 			
 		}  
 		}
 
+	//consuming from question generator when a category is created
+	
 	@KafkaListener(topics="Categories.t")
     public void processEvent(CategoriesModel category) {
-		System.out.println("Category create data from Question Generation");
-		System.out.println("received content = " + category.toString());
+		
 		log.info("received content = '{}'", category.toString());
 		if(categoriesRepository.checkCategoryId(1).size()==0)
 		{
-		categoriesRepository.addCategory(1);
+			//new categories node
+			
+		    categoriesRepository.addCategory(1);
 		}
 		if(categoryRepository.checkCategoryId(category.getCategoryId()).size()==0)
 		{
+			//new category node
+			
 		    categoryRepository.addCategory(1,category.getCategoryId(), category.getCategoryName(), category.getCategoryImage(),strDate);
 		}
 		else
 		{
+			//updating existing category node
+			
 			categoryRepository.updateCategory(category.getCategoryId(), category.getCategoryName(), category.getCategoryImage(),strDate);	
 		}
     }
 
+	//consuming from user manager for user favourite category
+	
 	@KafkaListener(topics="selected_categories.t")
     public void processEvent(SelectedCategoriesModel user) {
-		System.out.println("User create data from user category");
-		
-		System.out.println("received content = " + user.toString());
+
+		//creating user favourite category relationship
 		
 		userRepository.setUserFavCategory(user.getUserId(), user.getSelectedCategoryId(), strDate);
 
     }
+	
+	//consuming from user manager whenever a new user is created
+	
 	@KafkaListener(topics="new-user-created.t")
     public void processEvent(User user) {
-		System.out.println("User create data from user manager");
-		System.out.println("received content = " + user.toString());
+		
 		log.info("received content = '{}'", user.toString());
 		RecommendationUser u=new RecommendationUser();
 		if(userRepository.checkUserId(user.getUserId()).size()==0)
 		{
+			//creating new user node
+			
 	         userRepository.addUser(user.getUserId(), user.getUserName(), user.getGender(), user.getAge(), user.getLocation(),strDate);
 		}
 		else
 		{
+			//updating existing user node
+			
 			 userRepository.updateUser(user.getUserId(), user.getUserName(), user.getGender(), user.getAge(), user.getLocation(),strDate);
 			
 		}
