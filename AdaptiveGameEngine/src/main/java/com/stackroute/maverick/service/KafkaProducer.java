@@ -7,7 +7,7 @@
 //import org.springframework.kafka.core.KafkaTemplate;
 //import org.springframework.stereotype.Service;
 //
-//
+//import com.stackroute.maverick.domain.AdaptiveResult;
 //import com.stackroute.maverick.domain.User;
 //
 //
@@ -20,10 +20,10 @@
 //	@Autowired
 //	private KafkaTemplate<String, Object> kafkaTemplate;
 //
-//	public void sendUser(RecommendationUser user) {
+//	public void sendResult(AdaptiveResult result) {
 //
-//		log.info("sending data='{}'", user);
-//		kafkaTemplate.send("recommendation-user.t", user);
+//		log.info("sending data='{}'", result);
+//		kafkaTemplate.send("AdaptiveResult.t", result);
 //	}
 //	
 //	

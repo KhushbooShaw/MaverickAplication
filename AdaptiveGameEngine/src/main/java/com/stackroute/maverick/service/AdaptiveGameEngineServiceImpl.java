@@ -161,11 +161,11 @@ public class AdaptiveGameEngineServiceImpl implements AdaptiveGameEngineService 
 
 	@Override
 	public void createCategoriesNode() {
-		if(categoriesRepository.checkCategoryId(1).size()==0)
-		{
-			categoriesRepository.addCategory(1);
-		}
-		
+//		if(categoriesRepository.checkCategoryId(1)==null)
+//		{
+//			categoriesRepository.addCategory(1);
+//		}
+//		
 	}
 
 	@Override

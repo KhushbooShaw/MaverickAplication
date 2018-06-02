@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 @EnableNeo4jRepositories("com.stackroute.maverick.repository")
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class AdaptiveGameEngineApplication {
 
 	public static void main(String[] args) {

@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
-import com.netflix.discovery.shared.Application;
+//import com.netflix.appinfo.InstanceInfo;
+//import com.netflix.discovery.EurekaClient;
+//import com.netflix.discovery.shared.Application;
 import com.stackroute.maverick.domain.AdaptiveOption;
 import com.stackroute.maverick.domain.AdaptiveQuestion;
 import com.stackroute.maverick.domain.AdaptiveResponseQuestion;
@@ -48,6 +48,7 @@ import com.stackroute.maverick.domain.Questions;
 import com.stackroute.maverick.domain.User;
 //import com.stackroute.maverick.service.KafkaProducer;
 import com.stackroute.maverick.service.AdaptiveGameEngineService;
+//import com.stackroute.maverick.service.KafkaProducer;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -67,13 +68,13 @@ public class AdaptiveGameEngineController {
 
     private RestTemplate restTemplate;
 
-    @Autowired
-
-    private EurekaClient eurekaClient;
-
-    @Value("${service.gameManagerIPAddress}")
-
-    private String gameManagerIPAddress;
+//    @Autowired
+//
+//    private EurekaClient eurekaClient;
+//
+//    @Value("${service.gameManagerIPAddress}")
+//
+//    private String gameManagerIPAddress;
     
     private List<Questions> questionsInL1;
     
@@ -106,8 +107,8 @@ public class AdaptiveGameEngineController {
 	//Questions q;
 	int i=0;
 
-	//@Autowired
-	//KafkaProducer producer;
+//	@Autowired
+//	KafkaProducer producer;
 
 	Logger log = LoggerFactory.getLogger(AdaptiveGameEngineController.class);
 
@@ -147,7 +148,7 @@ public class AdaptiveGameEngineController {
 		
 		
         
-       String url=gameManagerIPAddress+"/api/game/games";
+       String url="/api/game/games";
 
         Game[] game = restTemplate.getForObject(url, Game[].class);
          System.out.println(game[0].getCategoryId());
@@ -184,27 +185,27 @@ public class AdaptiveGameEngineController {
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption2()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption3()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption4()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel1(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), false, strDate);
         				}
         			}
         			else if(game[i].getTopic().getQuestions().get(j).getQuestionLevel()==2)
@@ -221,27 +222,27 @@ public class AdaptiveGameEngineController {
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption2()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption3()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption4()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel2(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), false, strDate);
         				}
         			}
         			else if(game[i].getTopic().getQuestions().get(j).getQuestionLevel()==3)
@@ -259,27 +260,27 @@ public class AdaptiveGameEngineController {
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption2()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 2, game[i].getTopic().getQuestions().get(j).getOption2(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption3()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 3, game[i].getTopic().getQuestions().get(j).getOption3(), false, strDate);
         				}
         				if(game[i].getTopic().getQuestions().get(j).getCorrectAnswer().equalsIgnoreCase(game[i].getTopic().getQuestions().get(j).getOption4()))
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), true, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), true, strDate);
         			    }
         				else
         				{
-        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption1(), false, strDate);
+        					adaptiveService.addOptionInQuestionOfLevel3(game[i].getCategoryId(), game[i].getTopic().getTopicId(), game[i].getTopic().getQuestions().get(j).getQuestionId(), 4, game[i].getTopic().getQuestions().get(j).getOption4(), false, strDate);
         				}
       			}
        		}
@@ -335,20 +336,25 @@ public class AdaptiveGameEngineController {
 		   
 		   for(int j=0;j<option.size();j++)
 		   {
+			 
 			   if(option.get(j).getOption_id()==1)
 			   {
+				   System.out.println(option.get(j).getOption_value());
 				   question.setOption1(option.get(j).getOption_value());
 			   }
 			   if(option.get(j).getOption_id()==2)
 			   {
+				   System.out.println(option.get(j).getOption_value());
 				   question.setOption2(option.get(j).getOption_value());
 			   }
 			   if(option.get(j).getOption_id()==3)
 			   {
+				   System.out.println(option.get(j).getOption_value());
 				   question.setOption3(option.get(j).getOption_value());
 			   }
 			   if(option.get(j).getOption_id()==4)
 			   {
+				   System.out.println(option.get(j).getOption_value());
 				   question.setOption4(option.get(j).getOption_value());
 			   }
 		   }
@@ -441,7 +447,7 @@ public class AdaptiveGameEngineController {
 		   
 	   }
 	   }
-	   return questionsInL3;
+	   return questionsInL1;
 	   
    }
    @MessageMapping("/message")
@@ -537,6 +543,7 @@ public class AdaptiveGameEngineController {
 		if(i==10)
 		{
 		adaptiveResult.setResponse(response);
+		//producer.sendResult(adaptiveResult);
 		System.out.println(adaptiveResult);
 		}
 		i++;

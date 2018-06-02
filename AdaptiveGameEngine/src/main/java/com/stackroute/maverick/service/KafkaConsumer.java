@@ -17,10 +17,10 @@
 //public class KafkaConsumer {
 //	private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 //   
-//	@KafkaListener(topics="hello")
-//    public void processEvent(String user) {
-//		System.out.println("calling from kafka consumer recommendation");
-//		System.out.println("received content = " + user.toString());
-//		log.info("received content = '{}'", user.toString());
-//	}
+////	@KafkaListener(topics="hello")
+////    public void processEvent(String user) {
+////		System.out.println("calling from kafka consumer recommendation");
+////		System.out.println("received content = " + user.toString());
+////		log.info("received content = '{}'", user.toString());
+////	}
 //}
